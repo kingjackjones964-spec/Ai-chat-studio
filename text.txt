@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Studio</title>
+    <meta name="theme-color" content="#3a5a40">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <style>
+        /* CSS for Mobile-First Design */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            background-color: #3a5a40;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .chat-container {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        .message {
+            max-width: 80%;
+            margin: 5px 0;
+            padding: 10px 15px;
+            border-radius: 20px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        .user-message {
+            align-self: flex-end;
+            background-color: #007bff; /* Blue Bubble */
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        .ai-message {
+            align-self: flex-start;
+            background-color: #e9e9eb; /* Grey Bubble */
+            color: #333;
+            border-bottom-left-radius: 5px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid #ddd;
+        }
+        #userInput {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            margin-right: 10px;
+            font-size: 1em;
+            resize: none;
+            max-height: 80px;
+        }
+        #sendButton {
+            background-color: #3a5a40;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        AI Chat Studio
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="ai-message">
+            <p><strong>अटेंशन:</strong> API Key Missing!</p>
+            <p>चैट फ़ंक्शन को सक्रिय करने के लिए आपको JavaScript कोड में अपनी Gemini या ChatGPT API key डालनी होगी।</p>
+            <p>यह एक डिज़ाइन प्रोटोटाइप है, जिसे होस्ट करने के बाद आप कोड में API key लगा सकते हैं।</p>
+        </div>
+    </div>
+
+    <div class="input-area">
+        <textarea id="userInput" placeholder="अपना सवाल यहाँ टाइप करें..."></textarea>
+        <button id="sendButton">भेजें</button>
+    </div>
+
+    <script>
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        document.getElementById('userInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); // prevents adding a new line
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const messageText = userInput.value.trim();
+            if (messageText === "") return;
+
+            // 1. Display User Message
+            appendMessage(messageText, 'user-message');
+            userInput.value = '';
+            
+            // 2. Display A Mock AI Response (Since API key is missing)
+            setTimeout(() => {
+                appendMessage("आपका मैसेज मिल गया। API सक्रिय होने पर मैं जवाब दे सकता हूँ।", 'ai-message');
+            }, 500);
+
+            // Scroll to the bottom
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function appendMessage(text, type) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+        }
+    </script>
+</body>
+</html>
