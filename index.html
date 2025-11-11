@@ -98,6 +98,8 @@
     </div>
 
     <script>
+        const GEMINI_API_KEY = "AIzaSyDRKIj-QL77eygCsN_4XmaiSptav9fzOG8";
+const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" + GEMINI_API_KEY;
         document.getElementById('sendButton').addEventListener('click', sendMessage);
         document.getElementById('userInput').addEventListener('keypress', function (e) {
             if (e.key === 'Enter' && !e.shiftKey) {
